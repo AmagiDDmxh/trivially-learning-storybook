@@ -5,20 +5,26 @@ import {
   RenderOptions,
   RenderResult,
 } from '@testing-library/react'
-import { FC, ReactElement } from 'react'
-// import { ThemeProvider } from "my-ui-lib"
-// import { TranslationProvider } from "my-i18n-lib"
-// import defaultStrings from "i18n/en-x-default"
+import { FC } from 'react'
+import { IntlProvider } from 'react-intl'
+
+import locales from '../locales'
 
 const Providers: FC = ({ children }) => {
-  return children as ReactElement
-  // return (
-  //   <ThemeProvider theme="light">
-  //     <TranslationProvider messages={defaultStrings}>
-  //       {children}
-  //     </TranslationProvider>
-  //   </ThemeProvider>
-  // )
+  const defaultLocale = 'en-US' as const
+  const messages = locales[defaultLocale]
+
+  return (
+    <>
+      <IntlProvider
+        locale={defaultLocale}
+        defaultLocale={defaultLocale}
+        messages={messages}
+      >
+        {children}
+      </IntlProvider>
+    </>
+  )
 }
 
 export type CustomRender = <
